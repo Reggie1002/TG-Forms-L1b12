@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitoring Form - L1</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            display: flex;
+            gap: 2px;
+        }
+        .section {
+            border: 1px solid #ccc;
+            padding: 2px;
+            width: 30%;
+        }
+    </style>
+	<style>
+        input[type="number"] {
+            width: 50px; /* Adjust the width as needed */
+        }
+    </style>
+
+
+</head>
+<body>
+    <h1 style="font-size: 16px;margin-top: 0;margin-bottom: 0">Targeted Grazing Monitoring: Forms - L1</h1>
+	<h2 style="font-size: 16px;margin-top: 0;margin-bottom: 0">Pre-grazing</h2>
+	 <div class="container">
+
+        
+    <div id="section1" class="section">
+        <h3 style="font-size: 14px;margin-top: 0;margin-bottom: 0">Grass Height</h3>
+	
+    <form id="calcForm" onsubmit="calculate(); return false;">
+        <div class="form-group">
+            <label for="num1">&nbsp;&nbsp;5 paces:</label>
+            <input type="number" id="num1" maxlength="4" size="4">
+        </div>
+        <div class="form-group">
+            <label for="num2">10 paces:</label>
+            <input type="number" id="num2" maxlength="4" size="4">
+        </div>
+	        <div class="form-group">
+            <label for="num3">15 paces:</label>
+            <input type="number" id="num3" maxlength="4" size="4">
+        </div>	
+	        <div class="form-group">
+            <label for="num4">20 paces:</label>
+            <input type="number" id="num4" maxlength="4" size="4">
+        </div>	
+	        <div class="form-group">
+            <label for="num5">25 paces:</label>
+            <input type="number" id="num5" maxlength="4" size="4">
+        </div>	
+					
+        <button type="submit">Average</button>
+    </form>
+    <div class="result" id="result"></div>
+    <button onclick="downloadResult()">Download</button>
+
+    
+	<script>
+	const currentDate = new Date().toLocaleDateString(); // Formats the date in the user's locale
+	const userDateNow = 'Today\'s date is: ' + currentDate;
+	document.getElementById('yourElementId').innerHTML = userDateNow;
+	</script>
+	<script>
+function calculate() {
+    const num1 = parseFloat(document.getElementById('num1').value);
+    const num2 = parseFloat(document.getElementById('num2').value);
+    const num3 = parseFloat(document.getElementById('num3').value);     
+    const num4 = parseFloat(document.getElementById('num4').value); 
+    const num5 = parseFloat(document.getElementById('num5').value);
+    
+    const numbers = [num1, num2, num3, num4, num5];
+    let sum = 0;
+    let counter = 0;
+    
+    for (const num of numbers) {
+        if (num !== 0) {
+            sum += num;
+            counter++;
+        }
+    }
+    
+    let division;
+    if (counter !== 0) {
+        division = sum / counter;
+    } else {
+        division = 'Division by zero error';
+    }
+    
+    document.getElementById('result').textContent = 'Grass1: ' + num1 + '\r\n' +
+              'Grass2: ' + num2 + '\r\n' +
+              'Grass3: ' + num3 + '\r\n' +
+              'Grass4: ' + num4 + '\r\n' +
+              'Grass5: ' + num5 + '\r\n' +
+			  'Average: ' + division;
+    return sum;
+}
+
+
+function downloadResult() {
+    const resultText = document.getElementById('result').textContent;
+
+    // Get current date and time
+    const now = new Date();
+    const formattedDate = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+    const formattedTime = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
+    const timestamp = `${formattedDate}_${formattedTime.replace(/:/g, '-')}`;
+    const formattedDateTime = `${formattedDate} ${formattedTime}`;
+
+    // Add the date and time to the file content
+    const fileContent = `Generated on: ${formattedDateTime}\n\n${resultText}`;
+    const blob = new Blob([fileContent], { type: 'text/plain' });
+
+    // Create the download link
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+
+    // Set the file name with the timestamp
+    link.download = `result_${timestamp}.txt`;
+
+    // Trigger the download
+    link.click();
+}
+    </script>
+    </div>
+    
+    
+	<div id="section3" class="section">
+<h4 style="font-size: 14px;margin-top: 0;margin-bottom: 0">Bare Soil</h4>
+	
+    <form id="calcForm" onsubmit="calculate3(); return false;">
+        
+		<div class="form-group">
+            <label for="num11">&nbsp;&nbsp;5 paces:</label>
+            <input type="number" id="num11" maxlength="4" size="4">
+        </div>
+        <div class="form-group">
+            <label for="num12">10 paces:</label>
+            <input type="number" id="num12" maxlength="4" size="4" >
+        </div>
+	        <div class="form-group">
+            <label for="num13">15 paces:</label>
+            <input type="number" id="num13" maxlength="4" size="4">
+        </div>	
+	        <div class="form-group">
+            <label for="num14">20 paces:</label>
+            <input type="number" id="num14" maxlength="4" size="4">
+        </div>	
+	        <div class="form-group">
+            <label for="num15">25 paces:</label>
+            <input type="number" id="num15" maxlength="4" size="4">
+        </div>	
+		
+        <button type="submit">Average</button>
+    </form>
+	
+    <div class="result3" id="result3"></div>
+    <button onclick="downloadResult3()">Download</button>
+
+    
+	<script>
+	const currentDate = new Date().toLocaleDateString(); // Formats the date in the user's locale
+	const userDateNow = 'Today\'s date is: ' + currentDate;
+	document.getElementById('yourElementId').innerHTML = userDateNow;
+	</script>
+	<script>
+function calculate3() {
+    const num11 = parseFloat(document.getElementById('num11').value);
+    const num12 = parseFloat(document.getElementById('num12').value);
+    const num13 = parseFloat(document.getElementById('num13').value);     
+    const num14 = parseFloat(document.getElementById('num14').value); 
+    const num15 = parseFloat(document.getElementById('num15').value);
+    
+    const numbers = [num11, num12, num13, num14, num15];
+    let sum = 0;
+    let counter = 0;
+    
+    for (const num of numbers) {
+        if (num !== 0) {
+            sum += num;
+            counter++;
+        }
+    }
+    
+    let division;
+    if (counter !== 0) {
+        division = sum / counter;
+    } else {
+        division = 'Division by zero error';
+    }
+  
+  
+    document.getElementById('result3').textContent = 'Soil1: ' + num11 + '\r\n' +
+              'Soi12: ' + num12 + '\r\n' +
+              'Soil3: ' + num13 + '\r\n' +
+              'Soil4: ' + num14 + '\r\n' +
+              'Soil5: ' + num15 + '\r\n' +
+			  'Average Soil: ' + division;
+    return sum;
+}
+
+
+function downloadResult3() {
+    const result3Text = document.getElementById('result3').textContent;
+
+    // Get current date and time
+    const now = new Date();
+    const formattedDate = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+    const formattedTime = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}:${String(now.getSeconds()).padStart(2, '0')}`;
+    const timestamp = `${formattedDate}_${formattedTime.replace(/:/g, '-')}`;
+    const formattedDateTime = `${formattedDate} ${formattedTime}`;
+
+    // Add the date and time to the file content
+    const fileContent = `Generated on: ${formattedDateTime}\n\n${result2Text}`;
+    const blob = new Blob([fileContent], { type: 'text/plain' });
+
+    // Create the download link
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+
+    // Set the file name with the timestamp
+    link.download = `result3_${timestamp}.txt`;
+
+    // Trigger the download
+    link.click();
+}
+    </script>
+    </div>
+    
+
+	</div>
+</body>
+</html>
